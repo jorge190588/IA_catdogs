@@ -1,0 +1,167 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}" />
+    <title>Clasificar imagenes</title>
+    <style>
+        /* Remove the navbar's default margin-bottom and rounded borders */
+        
+        .navbar {
+            margin-bottom: 0;
+            border-radius: 0;
+          
+        }
+        /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+
+        .row.content {
+            height: 450px
+        }
+        /* Set gray background color and 100% height */
+
+        .sidenav {
+            padding-top: 20px;
+            background-color: #f1f1f1;
+            height: 100%;
+        }
+        /* Set black background color, white text and some padding */
+
+        footer {
+            background-color: #d34615;
+            color: white;
+            padding: 15px;
+        }
+        /* On small screens, set height to 'auto' for sidenav and grid */
+       .col-sm-12 > p {
+            font-size: 20px;
+         }
+       #myCarousel{
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        @media screen and (max-width: 767px) {
+            .sidenav {
+                height: auto;
+                padding: 15px;
+            }
+            .row.content {
+                height: auto;
+            }
+        }
+
+         {% block estilo %}
+        
+        {% endblock estilo %}
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">TensorFlow</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="{% url 'home' %}">Inicio <span class="sr-only">(current)</span></a></li>
+                    <li><a href="{% url 'cargar_imagen' %}">Clasificar Animales</a></li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">UMG</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    {% block contenido %}
+<br>
+
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+            <div class="item active">
+                <img src="../static/imagenes/logo.png" alt="tensorflow" style="width:100%;height: 400px;">
+            </div>
+
+            <div class="item">
+                <img src="../static/imagenes/python.jpg" alt="python" style="width:100%;height: 400px;">
+            </div>
+
+            <div class="item">
+                <img src="../static/imagenes/red_neuronal.jpg" alt="red_neuronal" style="width:100%; height: 400px;">
+            </div>
+               <div class="item">
+                <img src="../static/imagenes/umg.jpg" alt="red_neuronal" style="width:100%; height: 400px;">
+            </div>
+        </div>
+
+        <!-- Left and right controls -->
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                <span class="sr-only">Previous</span>
+             </a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+
+            <span class="sr-only">Next</span>
+            </a>
+    </div>
+
+    <div class="container-fluid text-center">
+        <div class="row content">
+            <div class="col-sm-12 text-left text-justify">
+                <h1 class="text-center"><strong>Clasificador de Animales (Perro, Gato)</strong></h1>
+                <p>Este es un mini proyecto sobre clasificación de imágenes para responder a la imagen de entrada si es un perro y gato con algoritmo de 
+                    aprendizaje automático llamado redes neuronales convolucionales.</p>
+                <h3><strong>Implementación del modelo</strong></h3>
+                        <p>La red que se implemento en este proyecto es pequeña y simple (que las que se usan para 
+                            resolver problemas del mundo real) para que también pueda entrenar esto en su CPU. 
+                            Mientras se entrena, las imágenes de las clases (perros / gatos) se alimentan a 
+                            una capa convolucional que es seguida por 2 capas convolucionales más. Después de las 
+                            capas convolucionales, aplanamos la salida y agregamos dos capas completamente conectadas 
+                            al final. La segunda capa completamente conectada tiene solo dos salidas que representan 
+                            la probabilidad de que una imagen sea un gato o un perro.                        </p>
+                        <img src="../static/imagenes/red_neuronal.webp" style="width:100%; height: 400px;">
+
+            </div>
+        </div>
+    </div>
+
+        
+    {% endblock contenido %}
+    {% block footer%}
+    <footer class="container-fluid text-center">
+        <p>Clasificar Animales</p>
+    </footer>
+    {% endblock%}
+
+    <script src="{% static 'js/jquery-1.10.2.min.js'%}"></script>
+    <script src="{% static 'js/bootstrap.min.js'%}"></script>
+    <script>
+    {% block javaSc%}
+        
+    {% endblock%}
+    </script>
+</body>
+
+</html>

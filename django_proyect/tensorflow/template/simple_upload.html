@@ -1,0 +1,149 @@
+{% extends 'index.html'%} 
+
+ {% block estilo %}
+        .contenido-principal{
+           height:600px;
+           padding: 15px;
+        }
+
+        
+        .btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+#img-upload, #img-upload2{
+    width: 100%;
+    height: 300px;
+    background: #f5f5f5;
+}
+
+ {% endblock estilo %}
+
+
+
+{% block contenido %}
+<div class="contenido-principal">
+    <h1 class="text-center"><strong> Clasificar Animales </strong> </h1>
+    <hr>
+<div class="row">
+<div class="col-xs-6 col-md-6  col-sm-6 ">
+  <form method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-btn">
+                <span class="btn btn-primary btn-file">
+                    {% csrf_token %}
+                    Subir… <input type="file" name="myfile"accept="image/png, image/jpeg, image/gif" id="imgInp">
+                </span>
+            </span>
+            <input id='urlname'type="text" class="form-control" readonly>
+        </div>
+          <br/>
+          <img id='img-upload'            
+          {% if uploaded_file_url  %}
+          
+          src="{{ uploaded_file_url }}"
+          {% endif %}
+          />
+        <br/>
+        <button type="submit" class="btn btn-primary btn-file">Analizar</button>
+        
+    </div>
+        </form>
+</div>
+  <div class="col-xs-6 col-md-6  col-sm-6 ">
+    <div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">Resultado</h3>
+  </div>
+  <div class="panel-body">
+    perro: {{ perro }}%
+<div class="progress">
+   <div class="progress-bar progress-bar-warning" style="width: {{ perro }}%"></div>
+</div>
+    gato: {{ gato }}%
+<div class="progress">
+ <div class="progress-bar progress-bar-success" style="width: {{ gato }}%"></div>
+</div>
+
+  </div>
+</div>
+</div>
+<div class="col-xs-6 col-md-6  col-sm-6">
+    <img src="../static/imagenes/umg.jpg" alt="red_neuronal" style="width:85%; height: 170px;">
+</div>
+</div>
+
+
+
+
+
+  
+</div>
+{% endblock contenido %}
+ {% block footer%}
+    <footer class="container-fluid text-center">
+        <p>Clasificar Animales</p>
+    </footer>
+    {% endblock%}
+ {% block javaSc%}
+        $(document).ready( function() {
+    
+    	$(document).on('change', '.btn-file :file', function() {
+		var input = $(this),
+			label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+		input.trigger('fileselect', [label]);
+		});
+
+		$('.btn-file :file').on('fileselect', function(event, label) {
+		    
+		    var input = $(this).parents('.input-group').find(':text'),
+		        log = label;
+		    
+		    if( input.length ) {
+		        input.val(log);
+		    } else {
+		        if( log ) alert(log);
+		    }
+	    
+		});
+		
+		function readURL(input) {
+		    if (input.files && input.files[0]) {
+		        var reader = new FileReader();
+		        
+		        reader.onload = function (e) {
+		            $('#img-upload').attr('src', e.target.result);
+		        }
+		        
+		        reader.readAsDataURL(input.files[0]);
+		    }
+		}
+
+		$("#imgInp").change(function(){
+		    readURL(this);
+		});
+		
+		$("#clear").click(function(){
+		    $('#img-upload').attr('src','');
+		    $('#urlname').val('');
+		});
+	});
+    {% endblock%}
+    </script>
